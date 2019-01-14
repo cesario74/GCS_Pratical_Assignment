@@ -204,6 +204,7 @@ perguntas [HashMap<String, Produto> produtos]
         String o1Obj = null;
         HashMap <String, String> todos = new HashMap<>();
         String produtoUnico = "";
+        String origemTodos = "";
     }
           : '(' tipo_Q{if(!$tipo_Q.ok){ System.out.println("O tipo de questão introduzido é inválido."); $perguntas.ok=false;}
                        else {$perguntas.tipoQ=$tipo_Q.tipoQ;}} 
@@ -423,20 +424,45 @@ perguntas [HashMap<String, Produto> produtos]
                             case "\"origem\"":
                                 if($o1.operadorAux == null){
                                     if($o1.objText.contains("todos")){
-                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), " -> A origem é: " + produto.getValue().torra + ".");}
+                                        for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                            if((!produto.getValue().origem.isEmpty())){
+                                                int i;
+                                                for (i = 0; i < (produto.getValue().origem.size()-1); i++) {
+                                                    origemTodos += produto.getValue().origem.get(i) + ", ";
+                                                }
+                                                origemTodos += produto.getValue().origem.get(i) + ".";
+                                                todos.put(produto.getKey(), " -> Origem: " + origemTodos);
+                                            }
+                                            else {todos.put(produto.getKey(), " -> Origem: não tem origem");
+                                            }
+                                            origemTodos = "";
+                                        }
                                     }
                                     else{
-                                         produtoUnico += "A origem é: " + $perguntas.produtos.get($o1.objText).torra + ".";
+                                         if((!$perguntas.produtos.get($o1.objText).origem.isEmpty())){
+                                            produtoUnico += "A origem é: ";
+                                            int i;
+                                            for (i = 0; i < ($perguntas.produtos.get($o1.objText).origem.size()-1); i++) {
+                                                produtoUnico += $perguntas.produtos.get($o1.objText).origem.get(i) + ", ";
+                                            }
+                                            produtoUnico += $perguntas.produtos.get($o1.objText).origem.get(i) + ".";
+                                         }
+                                         else {produtoUnico += "Não tem origem.";}
                                     }
                                 }
                                 else{
                                     if($o1.operadorAux.contains("contém")){
                                         if($o1.objText.contains("todos")){
-                                            for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
-                                                        if((!produto.getValue().origem.isEmpty()) && (produto.getValue().origem.contains($o1.textOp))){
-                                                            todos.put(produto.getKey(), " -> A origem é: " + produto.getValue().torra + ".");
-                                                            System.out.println(produto.getKey() + " -> A origem é: " + produto.getValue().torra + ".");
-                                                        }
+                                            for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                                if((!produto.getValue().origem.isEmpty()) && (produto.getValue().origem.contains($o1.textOp))){
+                                                    int i;
+                                                    for (i = 0; i < (produto.getValue().origem.size()-1); i++) {
+                                                        origemTodos += produto.getValue().origem.get(i) + ", ";
+                                                    }
+                                                    origemTodos += produto.getValue().origem.get(i) + ".";
+                                                    todos.put(produto.getKey(), " -> Origem: " + origemTodos);
+                                                }
+                                                origemTodos = "";
                                             }
                                         }
                                         else{
@@ -451,20 +477,45 @@ perguntas [HashMap<String, Produto> produtos]
                             case "\"país de origem\"":
                                 if($o1.operadorAux == null){
                                     if($o1.objText.contains("todos")){
-                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), " -> O tipo de torra é: " + produto.getValue().torra + ".");}
+                                        for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                            if((!produto.getValue().origemP.isEmpty())){
+                                                int i;
+                                                for (i = 0; i < (produto.getValue().origemP.size()-1); i++) {
+                                                    origemTodos += produto.getValue().origemP.get(i) + ", ";
+                                                }
+                                                origemTodos += produto.getValue().origemP.get(i) + ".";
+                                                todos.put(produto.getKey(), " -> País de origem: " + origemTodos);
+                                            }
+                                            else {todos.put(produto.getKey(), " -> País de origem: não tem país de origem.");
+                                            }
+                                            origemTodos = "";
+                                        }
                                     }
                                     else{
-                                         produtoUnico += "O tipo de torra é: " + $perguntas.produtos.get($o1.objText).torra + ".";
+                                         if((!$perguntas.produtos.get($o1.objText).origemP.isEmpty())){
+                                            produtoUnico += "O país de origem é: ";
+                                            int i;
+                                            for (i = 0; i < ($perguntas.produtos.get($o1.objText).origemP.size()-1); i++) {
+                                                produtoUnico += $perguntas.produtos.get($o1.objText).origemP.get(i) + ", ";
+                                            }
+                                            produtoUnico += $perguntas.produtos.get($o1.objText).origemP.get(i) + ".";
+                                         }
+                                         else {produtoUnico += "Não tem país de origem.";}
                                     }
                                 }
                                 else{
                                     if($o1.operadorAux.contains("contém")){
                                         if($o1.objText.contains("todos")){
-                                            for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
-                                                        if((produto.getValue().torra!=null) && (produto.getValue().torra.contains($o1.textOp))){
-                                                            todos.put(produto.getKey(), " -> O tipo de torra é: " + produto.getValue().torra + ".");
-                                                            System.out.println(produto.getKey() + " -> O tipo de torra é: " + produto.getValue().torra + ".");
-                                                        }
+                                            for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                                if((!produto.getValue().origemP.isEmpty()) && (produto.getValue().origemP.contains($o1.textOp))){
+                                                    int i;
+                                                    for (i = 0; i < (produto.getValue().origemP.size()-1); i++) {
+                                                        origemTodos += produto.getValue().origemP.get(i) + ", ";
+                                                    }
+                                                    origemTodos += produto.getValue().origemP.get(i) + ".";
+                                                    todos.put(produto.getKey(), " -> País de origem: " + origemTodos);
+                                                }
+                                                origemTodos = "";
                                             }
                                         }
                                         else{
