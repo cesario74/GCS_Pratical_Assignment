@@ -202,6 +202,7 @@ perguntas [HashMap<String, Produto> produtos]
         $perguntas.querie.add("\"país de origem\""); $perguntas.querie.add("\"tipo de bebida\"");
         $perguntas.querie.add("\"listar\"");
         String o1Obj = null;
+        String o2Obj = null;
         HashMap <String, String> todos = new HashMap<>();
         String produtoUnico = "";
         String origemTodos = "";
@@ -363,7 +364,6 @@ perguntas [HashMap<String, Produto> produtos]
                                             for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
                                                         if((produto.getValue().torra!=null) && (produto.getValue().torra.contains($o1.textOp))){
                                                             todos.put(produto.getKey(), " -> O tipo de torra é: " + produto.getValue().torra + ".");
-                                                            System.out.println(produto.getKey() + " -> O tipo de torra é: " + produto.getValue().torra + ".");
                                                         }
                                             }
                                         }
@@ -563,7 +563,394 @@ perguntas [HashMap<String, Produto> produtos]
           }
           (','{if($perguntas.tipoQ==2){$perguntas.ok=false; System.out.println("O número de operações introduzidas, não está de acordo com o tipo de pergunta.");}}
           (o2=operacao[$perguntas.ok, $perguntas.querie, $perguntas.produtos])
-            {if(o1Obj.contains($o2.objText)){;}
+            {if(o1Obj.contains($o2.objText)){
+                if($o2.existe){
+                        o2Obj = $o2.objText;
+                        switch($o2.queryAux) {
+                            case "\"quantidade\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                            todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade é: " + produto.getValue().quantidade + "ml.");
+                                        }
+                                    }
+                                    else{
+                                         produtoUnico += " A quantidade é: " + $perguntas.produtos.get($o2.objText).quantidade + "ml.";
+                                    }
+                                }
+                                else{
+                                    if($o2.textOp == null){
+                                        if($o2.objText.contains("todos")){
+                                            switch($o2.operadorAux){
+                                                case "<":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().quantidade < $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade é: " + produto.getValue().quantidade + "ml.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case ">":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().quantidade > $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade é: " + produto.getValue().quantidade + "ml.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case "=":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().quantidade == $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade é: " + produto.getValue().quantidade + "ml.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                default:
+                                                    System.out.println("Erro");
+                                                    break;
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                }
+                                break;
+                            case "\"número de cápsulas\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                            todos.put(produto.getKey(), todos.get(produto.getKey()) + " O número de cápsulas é: " + produto.getValue().n_capsulas + ".");
+                                        }
+                                    }
+                                    else{
+                                         produtoUnico += "O número de cápsulas é: " + $perguntas.produtos.get($o2.objText).n_capsulas + " cápsulas.";
+                                    }
+                                }
+                                else{
+                                    if($o2.textOp == null){
+                                        if($o2.objText.contains("todos")){
+                                            switch($o2.operadorAux){
+                                                case "<":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().n_capsulas < $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " O número de cápsulas é: " + produto.getValue().n_capsulas + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case ">":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().n_capsulas > $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " O número de cápsulas é: " + produto.getValue().n_capsulas + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case "=":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().n_capsulas == $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " O número de cápsulas é: " + produto.getValue().n_capsulas + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                default:
+                                                    System.out.println("Erro");
+                                                    break;
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                }
+                                break;
+                            case "\"intensidade\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), todos.get(produto.getKey()) + " A intensidade é: " + produto.getValue().intensidade + ".");}
+                                    }
+                                    else{
+                                         produtoUnico += "A intensidade é: " + $perguntas.produtos.get($o2.objText).intensidade + ".";
+                                    }
+                                }
+                                else{
+                                    if($o2.textOp == null){
+                                        if($o2.objText.contains("todos")){
+                                            switch($o2.operadorAux){
+                                                case "<":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().intensidade < $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A intensidade é: " + produto.getValue().intensidade + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case ">":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().intensidade > $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A intensidade é: " + produto.getValue().intensidade + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case "=":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().intensidade == $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A intensidade é: " + produto.getValue().intensidade + ".");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                default:
+                                                    System.out.println("Erro");
+                                                    break;
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                }
+                                break;
+                            case "\"torra\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de torra é: " + produto.getValue().torra + ".");}
+                                    }
+                                    else{
+                                         produtoUnico += "O tipo de torra é: " + $perguntas.produtos.get($o2.objText).torra + ".";
+                                    }
+                                }
+                                else{
+                                    if($o2.operadorAux.contains("contém")){
+                                        if($o2.objText.contains("todos")){
+                                            for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                if(todos.containsKey(produto.getKey())){
+                                                        if((produto.getValue().torra!=null) && (produto.getValue().torra.contains($o2.textOp))){
+                                                            todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de torra é: " + produto.getValue().torra + ".");
+                                                        }
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                    else{
+                                        {System.out.println("Erro");}
+                                    }
+                                }
+                                break;
+                            case "\"cafeína\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade de cafeína é: " + produto.getValue().cafeina + "mg/porção.");}
+                                    }
+                                    else{
+                                         produtoUnico += "A quantidade de cafeína é: " + $perguntas.produtos.get($o2.objText).cafeina + "mg/porção.";
+                                    }
+                                }
+                                else{
+                                    if($o2.textOp == null){
+                                        if($o2.objText.contains("todos")){
+                                            switch($o2.operadorAux){
+                                                case "<":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().cafeina < $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade de cafeína é: " + produto.getValue().cafeina + "mg/porção.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case ">":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().cafeina > $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade de cafeína é: " + produto.getValue().cafeina + "mg/porção.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                case "=":
+                                                    for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                        if(todos.containsKey(produto.getKey())){
+                                                            if(produto.getValue().cafeina == $o2.numOp){
+                                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " A quantidade de cafeína é: " + produto.getValue().cafeina + "mg/porção.");
+                                                            }
+                                                        }
+                                                    }
+                                                break;
+                                                default:
+                                                    System.out.println("Erro");
+                                                    break;
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                }
+                                break;
+                            case "\"origem\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                            if((!produto.getValue().origem.isEmpty())){
+                                                int i;
+                                                for (i = 0; i < (produto.getValue().origem.size()-1); i++) {
+                                                    origemTodos += produto.getValue().origem.get(i) + ", ";
+                                                }
+                                                origemTodos += produto.getValue().origem.get(i) + ".";
+                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " Origem: " + origemTodos);
+                                            }
+                                            else {
+                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " Origem: não tem origem");
+                                            }
+                                            origemTodos = "";
+                                        }
+                                    }
+                                    else{
+                                         if((!$perguntas.produtos.get($o2.objText).origem.isEmpty())){
+                                            produtoUnico += "A origem é: ";
+                                            int i;
+                                            for (i = 0; i < ($perguntas.produtos.get($o2.objText).origem.size()-1); i++) {
+                                                produtoUnico += $perguntas.produtos.get($o2.objText).origem.get(i) + ", ";
+                                            }
+                                            produtoUnico += $perguntas.produtos.get($o2.objText).origem.get(i) + ".";
+                                         }
+                                         else {produtoUnico += "Não tem origem.";}
+                                    }
+                                }
+                                else{
+                                    if($o2.operadorAux.contains("contém")){
+                                        if($o2.objText.contains("todos")){
+                                            for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                                if(todos.containsKey(produto.getKey())){
+                                                    if((!produto.getValue().origem.isEmpty()) && (produto.getValue().origem.contains($o2.textOp))){
+                                                        int i;
+                                                        for (i = 0; i < (produto.getValue().origem.size()-1); i++) {
+                                                            origemTodos += produto.getValue().origem.get(i) + ", ";
+                                                        }
+                                                        origemTodos += produto.getValue().origem.get(i) + ".";
+                                                        todos.put(produto.getKey(), todos.get(produto.getKey()) + " Origem: " + origemTodos);
+                                                    }
+                                                }
+                                                origemTodos = "";
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                    else{
+                                        {System.out.println("Erro");}
+                                    }
+                                }
+                                break;
+                            case "\"país de origem\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                            if((!produto.getValue().origemP.isEmpty())){
+                                                int i;
+                                                for (i = 0; i < (produto.getValue().origemP.size()-1); i++) {
+                                                    origemTodos += produto.getValue().origemP.get(i) + ", ";
+                                                }
+                                                origemTodos += produto.getValue().origemP.get(i) + ".";
+                                                todos.put(produto.getKey(), todos.get(produto.getKey()) + " País de origem: " + origemTodos);
+                                            }
+                                            else {todos.put(produto.getKey(), todos.get(produto.getKey()) + " País de origem: não tem país de origem.");
+                                            }
+                                            origemTodos = "";
+                                        }
+                                    }
+                                    else{
+                                         if((!$perguntas.produtos.get($o2.objText).origemP.isEmpty())){
+                                            produtoUnico += "O país de origem é: ";
+                                            int i;
+                                            for (i = 0; i < ($perguntas.produtos.get($o2.objText).origemP.size()-1); i++) {
+                                                produtoUnico += $perguntas.produtos.get($o2.objText).origemP.get(i) + ", ";
+                                            }
+                                            produtoUnico += $perguntas.produtos.get($o2.objText).origemP.get(i) + ".";
+                                         }
+                                         else {produtoUnico += "Não tem país de origem.";}
+                                    }
+                                }
+                                else{
+                                    if($o2.operadorAux.contains("contém")){
+                                        if($o2.objText.contains("todos")){
+                                            for (Map.Entry<String, Produto> produto : $perguntas.produtos.entrySet()) {
+                                                if(todos.containsKey(produto.getKey())){
+                                                    if((!produto.getValue().origemP.isEmpty()) && (produto.getValue().origemP.contains($o2.textOp))){
+                                                        int i;
+                                                        for (i = 0; i < (produto.getValue().origemP.size()-1); i++) {
+                                                            origemTodos += produto.getValue().origemP.get(i) + ", ";
+                                                        }
+                                                        origemTodos += produto.getValue().origemP.get(i) + ".";
+                                                        todos.put(produto.getKey(), todos.get(produto.getKey()) + " País de origem: " + origemTodos);
+                                                    }
+                                                }
+                                                origemTodos = "";
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                    else{
+                                        {System.out.println("Erro");}
+                                    }
+                                }
+                                break;
+                            case "\"tipo de bebida\"":
+                                if($o2.operadorAux == null){
+                                    if($o2.objText.contains("todos")){
+                                        for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de bebida é: " + produto.getValue().tipo + ".");}
+                                    }
+                                    else{
+                                         produtoUnico += " O tipo de bebida é: " + $perguntas.produtos.get($o2.objText).tipo + ".";
+                                    }
+                                }
+                                else{
+                                    if($o2.operadorAux.contains("contém")){
+                                        if($o2.objText.contains("todos")){
+                                            for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
+                                                if(todos.containsKey(produto.getKey())){
+                                                        if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains($o2.textOp))){
+                                                            todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de bebida é:: " + produto.getValue().tipo + ".");
+                                                            System.out.println(produto.getKey() + todos.get(produto.getKey()) + " O tipo de bebida é:: " + produto.getValue().tipo + ".");
+                                                        }
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Análise de dados com operadores apenas é efetuada a todos os produtos.");
+                                        }
+                                    }
+                                    else{
+                                        {System.out.println("Erro");}
+                                    }
+                                }
+                                break;
+                            case "\"listar\"":
+                                {for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {Produto p = produto.getValue(); System.out.println(p.toString());}}
+                                break;
+                        }
+                }
+             }
              else{System.out.println("As perguntas têm de ser relativas ao mesmo objeto.");}}
           )* ']' ')' '.'
           ;
