@@ -206,11 +206,32 @@ perguntas [HashMap<String, Produto> produtos]
         HashMap <String, String> todos = new HashMap<>();
         String produtoUnico = "";
         String origemTodos = "";
+        String nomeProduto = "";
+        int ops = 0;
+    }
+    @after{
+
+        if(!produtoUnico.equals("")){
+            System.out.println(nomeProduto + " -> " + produtoUnico);
+        }
+        else if($perguntas.tipoQ==1){
+            System.out.println(todos.size());
+        }
+        else{
+            for(Map.Entry<String, String> resposta : todos.entrySet()){
+                long count = resposta.getValue().chars().filter(ch -> ch == '.').count();
+                if(count == ops)
+                    System.out.println(resposta.getKey() + resposta.getValue());
+            }
+        }
+        System.out.println("\n");
     }
           : '(' tipo_Q{if(!$tipo_Q.ok){ System.out.println("O tipo de questão introduzido é inválido."); $perguntas.ok=false;}
                        else {$perguntas.tipoQ=$tipo_Q.tipoQ;}} 
           ',' '[' o1=operacao[$perguntas.ok, $perguntas.querie, $perguntas.produtos]
                   {
+                    nomeProduto = $o1.objText;
+                    ops=1;
                     if($o1.existe){
                         o1Obj = $o1.objText;
                         switch($o1.queryAux) {
@@ -542,7 +563,6 @@ perguntas [HashMap<String, Produto> produtos]
                                             for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
                                                         if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains($o1.textOp))){
                                                             todos.put(produto.getKey(), " -> O tipo de bebida é:: " + produto.getValue().tipo + ".");
-                                                            System.out.println(produto.getKey() + " -> O tipo de bebida é:: " + produto.getValue().tipo + ".");
                                                         }
                                             }
                                         }
@@ -563,7 +583,9 @@ perguntas [HashMap<String, Produto> produtos]
           }
           (','{if($perguntas.tipoQ==2){$perguntas.ok=false; System.out.println("O número de operações introduzidas, não está de acordo com o tipo de pergunta.");}}
           (o2=operacao[$perguntas.ok, $perguntas.querie, $perguntas.produtos])
-            {if(o1Obj.contains($o2.objText)){
+            {
+             ops++;
+             if(o1Obj.contains($o2.objText)){
                 if($o2.existe){
                         o2Obj = $o2.objText;
                         switch($o2.queryAux) {
@@ -931,7 +953,6 @@ perguntas [HashMap<String, Produto> produtos]
                                                 if(todos.containsKey(produto.getKey())){
                                                         if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains($o2.textOp))){
                                                             todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de bebida é:: " + produto.getValue().tipo + ".");
-                                                            System.out.println(produto.getKey() + todos.get(produto.getKey()) + " O tipo de bebida é:: " + produto.getValue().tipo + ".");
                                                         }
                                                 }
                                             }
@@ -944,9 +965,6 @@ perguntas [HashMap<String, Produto> produtos]
                                         {System.out.println("Erro");}
                                     }
                                 }
-                                break;
-                            case "\"listar\"":
-                                {for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {Produto p = produto.getValue(); System.out.println(p.toString());}}
                                 break;
                         }
                 }
