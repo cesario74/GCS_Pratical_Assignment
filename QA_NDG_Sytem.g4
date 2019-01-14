@@ -96,14 +96,23 @@ grammar QA_NDG_Sytem;
                  sb.append(this.quantidade+" ml; ");
                  sb.append(this.n_capsulas+" cápsulas; ");
                  sb.append(this.intensidade+" de intensidade; ");
-                 sb.append(this.torra+"; ");
+                 if(this.torra != null)
+                    sb.append(this.torra+"; ");
                  sb.append(this.cafeina+" mg/porção; ");
-                 for(String i: this.origem) {
-                    sb.append(i+", ");
+                 if(!this.origem.isEmpty()){
+                    int i;
+                    for(i=0; i<(this.origem.size())-1; i++) {
+                       sb.append(this.origem.get(i)+", ");
+                    }
+                    sb.append(this.origem.get(i));
+                    sb.append("; ");
                  }
-                 sb.append("; ");   
-                 for(String i: this.origemP) {
-                    sb.append(i+", ");
+                 if(!this.origemP.isEmpty()){
+                    int i;
+                    for(i=0; i<(this.origemP.size())-1; i++) {
+                       sb.append(this.origemP.get(i)+", ");
+                    }
+                    sb.append(this.origemP.get(i));
                  }
                  sb.append(". ");   
                  return sb.toString();   
