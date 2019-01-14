@@ -208,21 +208,22 @@ perguntas [HashMap<String, Produto> produtos]
         String origemTodos = "";
         String nomeProduto = "";
         int ops = 0;
+        int quantidade = 0;
     }
     @after{
 
         if(!produtoUnico.equals("")){
             System.out.println(nomeProduto + " -> " + produtoUnico);
         }
-        else if($perguntas.tipoQ==1){
-            System.out.println(todos.size());
-        }
         else{
             for(Map.Entry<String, String> resposta : todos.entrySet()){
                 long count = resposta.getValue().chars().filter(ch -> ch == '.').count();
                 if(count == ops)
-                    System.out.println(resposta.getKey() + resposta.getValue());
+                    if($perguntas.tipoQ!=1)
+                        System.out.println(resposta.getKey() + resposta.getValue());
+                    else quantidade++;
             }
+            if($perguntas.tipoQ==1) System.out.println(quantidade);
         }
         System.out.println("\n");
     }
@@ -561,9 +562,11 @@ perguntas [HashMap<String, Produto> produtos]
                                     if($o1.operadorAux.contains("contém")){
                                         if($o1.objText.contains("todos")){
                                             for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
-                                                        if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains($o1.textOp))){
-                                                            todos.put(produto.getKey(), " -> O tipo de bebida é:: " + produto.getValue().tipo + ".");
-                                                        }
+                                                    String pattern = "(\")";
+                                                    String updated = $o1.textOp.replaceAll(pattern, "");
+                                                    if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains(updated))){
+                                                        todos.put(produto.getKey(), " -> O tipo de bebida é: " + produto.getValue().tipo + ".");
+                                                    }
                                             }
                                         }
                                         else{
@@ -951,9 +954,11 @@ perguntas [HashMap<String, Produto> produtos]
                                         if($o2.objText.contains("todos")){
                                             for (Map.Entry<String, Produto>produto : $perguntas.produtos.entrySet()) {
                                                 if(todos.containsKey(produto.getKey())){
-                                                        if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains($o2.textOp))){
-                                                            todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de bebida é:: " + produto.getValue().tipo + ".");
-                                                        }
+                                                    String pattern = "(\")";
+                                                    String updated = $o2.textOp.replaceAll(pattern, "");
+                                                    if((produto.getValue().tipo!=null) && (produto.getValue().tipo.contains(updated))){
+                                                        todos.put(produto.getKey(), todos.get(produto.getKey()) + " O tipo de bebida é: " + produto.getValue().tipo + ".");
+                                                    }
                                                 }
                                             }
                                         }
@@ -997,7 +1002,7 @@ operacao [boolean ok, ArrayList<String> queries, HashMap<String, Produto> produt
                             }
                             else{$operacao.existe = false;}
                         }
-                        else{System.out.println("Query inválida"); $operacao.existe = false;}
+                        else{$operacao.existe = false;}
                     }
            ',' objeto {if($operacao.existe){
                             if($operacao.produtos.containsKey($objeto.objText) || $objeto.objText.contains("todos")){

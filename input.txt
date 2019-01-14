@@ -16,6 +16,23 @@
 ("Colômbia Lungo", "Lungo", 120, 12, 5, "Média", 74 mg, ("Arábica"), ("Colômbia"))
 ("Grande", "Grande", 200, 16, 5, 100 mg, ("Arábica"), ("Colômbia","Brasil","Etiópia"))
 ("Cortado", "Café com Leite", 80, 16, 58 mg, ("Arábica","Robusta"))
-("Galão", "Café com Leite", 180, 16, 88 mg, ("Robusta")).
+("Galão", "Café com Leite", 180, 16, 88 mg, ("Robusta"))
+("Cafe au Lait Intenso", "Café com Leite", 180, 16, 117 mg, ("Robusta"))
+("Cappuccino", "Café com Leite", 240, 16, 58 mg, ("Arábica","Robusta"), ("Colômbia", "Brasil", "Vietname"))
+("Latte Macchiato", "Café com Leite", 220, 16, 65 mg, ("Arábica"), ("Colômbia", "Brasil"))
+("Latte Macchiato Caramel", "Café com Leite", 220, 16, 52 mg, ("Arábica","Robusta"), ("Colômbia", "Quénia","Vietname"))
+("Nesquik", "Leite com chocolate", 150, 16)
+("Chococino", "Leite com chocolate", 210, 16)
+("Mocha", "Leite com chocolate", 220, 16)
+("Marrakesh Style Tea", "Chá", 150, 16, 13 mg)
+("Citrus Honey Black Tea", "Chá", 150, 16, 3 mg).
 ---
-(Qual,[("torra",>,"Escura","Lungo")]).
+(Quais,[("listar",todos),("listar",todos)]).
+(Quais,[("país de origem",contém,"Colômbia",todos),("número de cápsulas",<,16,todos)]).
+(Quais,[("intensidade","Galão"),("quantidade","Galão")]).
+(Qual,[("origem",contém,"Robusta",todos)]).
+(Qual,[("tipo de bebida",contém,"Leite",todos)]).
+(Quais,[("tipo de bebida",contém,"Leite",todos),("cafeína",>,0,todos)]).
+(Quantos,[("tipo de bebida",contém,"Leite",todos),("cafeína",>,0,todos)]).
+(Quais,[("tipo de bebida",>,"Leite",todos)]).
+(Qual,[("cafeína",>,50,todos),("número de cápsulas",<,16,todos)]).
