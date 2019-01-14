@@ -1,0 +1,21 @@
+("Ristreto Napoli", "Expresso", 30, 16, 13, "Escura", 117 mg, ("Arábica", "Robusta"), ("Uganda","Brasil","Colômbia"))
+("Ristreto Ardenza", "Expresso", 35, 16, 11, "Escura", 74 mg, ("Arábica","Robusta"), ("Etiópia", "Colômbia", "Vietname"))
+("Ristreto Barista", "Expresso", 35, 16, 9, "Muito Escura", 75 mg, ("Arábica","Robusta"), ("Etiópia", "Brasil", "Vietname"))
+("Ristreto", "Expresso", 35, 16, 8, "Escura", 63 mg, ("Arábica"), ("Brasil", "Vietname"))
+("Peru", "Expresso", 50, 12, 8, "Escura", 72 mg, ("Arábica"),("Peru"))
+("Buondi", "Expresso", 35, 16, 8, "Leve", 76 mg, ("Arábica","Robusta"), ("Camarões","Uganda","Colômbia","Brasil","Vietname"))
+("Essenza Di Moka", "Expresso", 75, 16, 8, "Escura", 144 mg, ("Arábica","Robusta"))
+("Espresso Intenso", "Expresso", 50, 16, 7, "Escura", 85 mg, ("Arábica","Robusta"), ("Colômbia", "Vietname"))
+("Espresso Intenso Decaffeinato", "Expresso", 50, 16, 7, "Escura", 2 mg, ("Arábica","Robusta"), ("Colômbia", "Vietname"))
+("Sical", "Expresso", 35, 16, 7, "Média", 68 mg, ("Arábica", "Robusta"), ("Colômbia", "Honduras", "Brasil", "Vietname"))
+("Espresso Caramel", "Expresso", 50, 16, 7, "Média", 55 mg, ("Arábica", "Robusta"), ("Brasil"))
+("Honduras", "Expresso", 50, 12, 6, "Média", 68 mg, ("Arábica"), ("Honduras"))
+("Espresso", "Expresso", 50, 16, 5, "Leve", 53 mg, ("Arábica"))
+("Espresso Decaffeinato", "Expresso", 50, 16, 5, "Leve", 1 mg, ("Arábica"), ("Colômbia", "Brasil"))
+("Lungo", "Lungo", 120, 16, 6, "Média", 81 mg, ("Arábica"), ("Etiópia", "Brasil", "Colômbia"))
+("Colômbia Lungo", "Lungo", 120, 12, 5, "Média", 74 mg, ("Arábica"), ("Colômbia"))
+("Grande", "Grande", 200, 16, 5, 100 mg, ("Arábica"), ("Colômbia","Brasil","Etiópia"))
+("Cortado", "Café com Leite", 80, 16, 58 mg, ("Arábica","Robusta"))
+("Galão", "Café com Leite", 180, 16, 88 mg, ("Robusta")).
+---
+(Qual,[("torra",>,"Escura","Lungo")]).
